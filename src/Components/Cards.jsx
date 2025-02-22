@@ -1,24 +1,34 @@
 import React from "react";
 import Card from "./Card";
 
-const Cards = ({ courses }) => {
-  const getCourses = () => {
-    let allCourses = [];
-    if (courses && typeof courses === 'object') {
-      Object.values(courses).forEach((courseCategory) => {
-        courseCategory.forEach((course) => {
-          allCourses.push(course);
-        });
-      });
-    }
-    return allCourses;
-  };
+const Cards = (props) => {
+  const courses = props.courses;
+  const category = props.category;
+  
+  function getCourses(){
+    
+      if(category==="All"){
+        let allCourses = [];
+        Object.values(courses).forEach(array=>{
+          array.forEach(courseData=>{
+            allCourses.push(courseData);
+          })
+        })
+        return allCourses;
+  
+      }
+      else{
+        return courses[category];
+      }
+    
+    
+  }
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-4">
-         { getCourses().map((course) => {
-           return <Card course = {course}/>
-          })}
+         { getCourses().map((course) => (
+            <Card key={course.id} course = {course}/>
+          ))}
         </div>
     )
 }

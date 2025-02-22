@@ -1,15 +1,21 @@
 import React from "react";
 
-const Filter = ({ filterData }) => {
+const Filter = ({ filterData, category, setCategory }) => {
   return (
-    <div className = "w-11/12 flex flex-wrap max-w-max space-x-4 gap-y-4 mx-auto py-4 justify-center">
-      {filterData.map((data, index) => (
-        <button className="text-lg px-2 py-1 rounded-md font-medium text-white bg-black hover:bg-opacity-50 border-2 transition-all duration-300" key={index}>
-          {data.title}
+    <div className="flex justify-center gap-4 my-4">
+      {filterData.map((item) => (
+        <button
+          key={item.id}
+          className={`px-4 py-2 rounded-md text-black bg-slate-200 
+            ${category === item.title ? "border-2 border-white" : "border-none"}`}
+          onClick={() => setCategory(item.title)}
+        >
+          {item.title}
         </button>
       ))}
     </div>
   );
 };
+
 
 export default Filter;

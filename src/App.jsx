@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 function App() {
 
   const [courses, setCourses] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState("All");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,28 +21,46 @@ function App() {
         console.log(course_data);
         setCourses(course_data.data);
       } catch (error) {
-        toast.error("cant fetch");
+        toast.error("Check internet connection!");
       }
     };
 
     fetchData();
   }, []);
 
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const response = await fetch(apiUrl);
+      const course_data = await response.json();
+      console.log(course_data);
+      setCourses(course_data.data);
+    } catch (error) {
+      toast.error("Check internet connection!");
+    }
+    setLoading(false);
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
+
   return (
 
     <div className="App" class="min-h-screen flex flex-col">
-      <Navbar />
+      <div><Navbar /></div>
 
       <div className="bg-slate-300">
-        <Filter filterData={filterData} />
+        <div>
+        <Filter filterData={filterData} category={category} setCategory={setCategory} />
+        </div>
 
-        <div className="w-11/12 max-w-[1200px] mx-auto flex justify-center items-center min-h-[50vh]">
-          <Cards courses={courses} />
+        <div className="w-11/12 max-w-[1200px] mx-auto flex justify-center items-center min-h-[50vh]">{
+          loading ? (console.log("wait")) :(<Cards courses={courses} category={category} />)}
         </div>
       </div>
 
-      
-      
+
+
     </div>
 
 
