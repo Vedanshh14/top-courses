@@ -2,7 +2,7 @@ import React from "react";
 
 const Filter = ({ filterData, category, setCategory }) => {
   return (
-    <div className="flex justify-center gap-4 my-4">
+    <div className="flex flex-wrap justify-center gap-4 my-4">
       {filterData.map((item) => (
         <button
           key={item.id}
